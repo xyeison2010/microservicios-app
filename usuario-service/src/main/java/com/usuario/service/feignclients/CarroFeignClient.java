@@ -36,3 +36,5 @@ fetch(url,{
 }})  
 
  */
+
+//cuando lo uso con gateway debo quitar la url de feigclient, pq usara cualquier puerto para la conexion

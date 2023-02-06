@@ -17,6 +17,8 @@ import com.usuario.service.modelos.Carro;
 import com.usuario.service.modelos.Moto;
 import com.usuario.service.servicio.UsuarioService;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -48,6 +50,7 @@ public class UsuarioController {
 		return ResponseEntity.ok(nuevoUsuario);
 	}
 	
+	@CircuitBreaker(name = "carrosCB" , fallbackMethod = "fallBackGetCarros")
 	@GetMapping("/carros/{usuarioId}")
 	public ResponseEntity<List<Carro>> listarCarros(@PathVariable("usuarioId") int id){
 		Usuario usuario = usuarioService.getUsuarioById(id);
@@ -58,7 +61,7 @@ public class UsuarioController {
 		List<Carro> carros = usuarioService.getCarros(id);
 		return ResponseEntity.ok(carros);
 	}
-	
+	@CircuitBreaker(name = "motosCB" , fallbackMethod = "fallBackGetMotos")
 	@GetMapping("/motos/{usuarioId}")
 	public ResponseEntity<List<Moto>> listarMotos(@PathVariable("usuarioId") int id){
 		Usuario usuario = usuarioService.getUsuarioById(id);
@@ -71,24 +74,26 @@ public class UsuarioController {
 	}
 	
 	
-	//guardamos un carro, pero desde el servicio principal ose estas
+	@CircuitBreaker(name = "carrosCB" , fallbackMethod = "fallBackSaveCarros")
 	@PostMapping("/carro/{usuarioId}")
 	public ResponseEntity<Carro> guardarCarro(@PathVariable("usuarioId") int usuarioId,@RequestBody Carro carro){
 		Carro nuevoCarro = usuarioService.saveCarro(usuarioId, carro);
 		return ResponseEntity.ok(nuevoCarro);
 	} 
-	
+	@CircuitBreaker(name = "motosCB" , fallbackMethod = "fallBackSavetMotos")
 	@PostMapping("/moto/{usuarioId}")
 	public ResponseEntity<Moto> guardarMoto(@PathVariable("usuarioId") int usuarioId,@RequestBody Moto moto){
 		Moto nuevaMoto = usuarioService.saveMoto(usuarioId, moto);
 		return ResponseEntity.ok(nuevaMoto);
 	}
-	//todos 
+	@CircuitBreaker(name = "todosCB" , fallbackMethod = "fallBackGetTodos")
 	@GetMapping("/todos/{usuarioId}")
 	public ResponseEntity<Map<String, Object>> listarTodosLosVehiculos(@PathVariable("usuarioId") int usuarioId){
 		Map<String,Object> resultado = usuarioService.getUsuarioAndVehiculos(usuarioId);
 		return ResponseEntity.ok(resultado);
 	}
 }
+//si un microservicio falla, todo los demas siguen funcionando esa es su funcion
+//circuit-breaker debe hacerse al servicio padre, q llama todos los demas servicios
 
 

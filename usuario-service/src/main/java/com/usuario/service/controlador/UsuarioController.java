@@ -118,7 +118,7 @@ private ResponseEntity<Map<String, Object>> fallBackGetTodos(@PathVariable("usua
 	
 	
 }
-//si un microservicio falla, todo los demas siguen funcionando esa es su funcion
-//circuit-breaker debe hacerse al servicio padre, q llama todos los demas servicios
+//si un microservicio falla, todo los demas siguen funcionando esa es su funcion, tolerancia a fallos de 
+//circuit-breaker debe hacerse en el servicio padre, q llama todos los demas servicios
 
 

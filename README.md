@@ -5,3 +5,4 @@
 ## Spring Cloud 
 ## GATEWAY :
 me va permitir accedes a traves de su puerto a los demas microservicios.
+## Zipkin

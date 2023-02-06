@@ -1,0 +1,13 @@
+server:
+  port:  8081
+spring:
+  cloud:
+    config:
+     server:
+       git:
+         default-label:  config-server # selecciono mi rama creada
+         uri:  https://github.com/xyeison2010/microservicios-app # mi repositorio donde guarda la configuracion 
+         search-paths: config-data  #y esa config se va guardar en esta carpeta config-data 
+           
+  application:
+    name: config-service   #este es el nombre de este servicio

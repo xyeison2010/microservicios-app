@@ -45,12 +45,12 @@ public class UsuarioService {
 
 	//uso de los modelos 
 	public List<Carro> getCarros(int usuarioId) { //acceso esa url del microservicio con restTemplate 
-		List<Carro> carros = restTemplate.getForObject("http://localhost:8002/carro/usuario/" + usuarioId, List.class);//vms obtener una lista
-		return carros;
+		List<Carro> carros = restTemplate.getForObject("http://carro-service/carro/usuario/" + usuarioId, List.class);//vms obtener una lista
+		return carros;   //change localhost:8002 por carro-serviceporq uso gateway puerta de enlace
 	} 
 
 	public List<Moto> getMotos(int usuarioId) {
-		List<Moto> motos = restTemplate.getForObject("http://localhost:8003/moto/usuario/" + usuarioId, List.class);
+		List<Moto> motos = restTemplate.getForObject("http://moto-service/moto/usuario/" + usuarioId, List.class);
 		return motos;
 	}
 //spring cloud ...

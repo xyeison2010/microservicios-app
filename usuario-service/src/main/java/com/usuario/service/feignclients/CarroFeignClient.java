@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.usuario.service.modelos.Carro;
 //ASI ES CON SPRING CLOUD MAS SENCILLO Q REST TEMPLATE 
 
-@FeignClient(name = "carro-service",url = "http://localhost:8002")//acceso al servicio y url, tmb al get,post,etc...
+@FeignClient(name = "carro-service")//acceso al servicio y url, tmb al get,post,etc...
 @RequestMapping("/carro")
 public interface CarroFeignClient {
 

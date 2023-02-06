@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,6 +93,30 @@ public class UsuarioController {
 		Map<String,Object> resultado = usuarioService.getUsuarioAndVehiculos(usuarioId);
 		return ResponseEntity.ok(resultado);
 	}
+	//tolerancia a fallos circuit-breaker
+	private ResponseEntity<List<Carro>> fallBackGetCarros(@PathVariable("usuarioId")int id , RuntimeException exception  ){
+		
+		return new ResponseEntity("el usuario : " + id + "tiene los carros en el taller" ,HttpStatus.OK);
+	}
+private ResponseEntity<Carro> fallBackSaveCarros(@PathVariable("usuarioId")int id , @RequestBody Carro carro , RuntimeException exception  ){
+		
+		return new ResponseEntity("el usuario : " + id + "no tiene dinero par alos carros " ,HttpStatus.OK);
+	}
+private ResponseEntity<List<Moto>> fallBackGetMotos(@PathVariable("usuarioId")int id , RuntimeException exception  ){
+	
+	return new ResponseEntity("el usuario : " + id + "tiene las motos en el taller" ,HttpStatus.OK);
+}
+private ResponseEntity<Moto> fallBackSaveMotos(@PathVariable("usuarioId")int id , @RequestBody Moto moto , RuntimeException exception  ){
+	
+	return new ResponseEntity("el usuario : " + id + "no tiene dinero para las motos " ,HttpStatus.OK);
+}
+	
+private ResponseEntity<Map<String, Object>> fallBackGetTodos(@PathVariable("usuarioId")int id , RuntimeException exception  ){
+	
+	return new ResponseEntity("el usuario : " + id + "tiene los vehiculos en el taller" ,HttpStatus.OK);
+}
+	
+	
 }
 //si un microservicio falla, todo los demas siguen funcionando esa es su funcion
 //circuit-breaker debe hacerse al servicio padre, q llama todos los demas servicios

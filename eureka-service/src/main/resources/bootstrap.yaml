@@ -1,0 +1,7 @@
+spring:
+  application:
+    name:  eureka-service
+  cloud:
+    config:
+      enabled: true
+      uri:  http://localhost:8081 #y pongo el puerto de config-server para q tenga sus propiedades

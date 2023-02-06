@@ -1,5 +1,6 @@
-# microservicios-app
+# Aplicaciones con la arquitectura de Microservicios
 ## tecnologias usadas 
-## EUREKA-SERVER
-## SPRING CLOUD
-## GATEWAY
+## Eureka Server
+## Spring Cloud 
+## GATEWAY :
+me va permitir accedes a traves de su puerto a los demas microservicios.
